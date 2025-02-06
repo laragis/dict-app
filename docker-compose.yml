@@ -1,0 +1,17 @@
+services:
+  phpfpm:
+    image: 'bitnami/php-fpm:8.4'
+    volumes:
+      - ./apps/backend:/app
+      - ./custom.ini:/opt/bitnami/php/etc/conf.d/custom.ini
+
+  nginx:
+    image: 'bitnami/nginx:latest'
+    depends_on:
+      - phpfpm
+    ports:
+      - '8080:80'
+      - '8443:443'
+    volumes:
+      - ./apps/backend:/app
+      - ./dict_laragis_vn.conf:/opt/bitnami/nginx/conf/server_blocks/dict_laragis_vn.conf
